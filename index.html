@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="icon" type="image/jpg" href="./img2.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+ <style>
+  body{
+    background-image: url("./img1.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  #h1{
+    background-color: #ffffff;
+    padding: 1%;
+    font-style: italic;
+  }
+  #form #input{
+    width: 40%;
+    margin-top: 15%;
+    border-radius: 5px;
+    height: 40px;
+    border: none;      
+  }
+  #form button{
+    margin-top: 2%;
+    width: 25%;
+  }
+  #cities{
+    font-size: 50px;
+    font-weight: bold;
+    margin-top: 3%;
+  }
+  #form #input:hover{
+    border: 3px solid blue;
+}
+  @media screen and(max-width:576px) {
+    #form #input{
+      width: 70%;
+      margin-top: 40%;
+    }
+    #form button{
+      margin-top: 5%;
+      width: 40%;
+
+    }
+    #cities{
+      font-size: 25px;
+      margin-top: 10%;
+    }
+  }
+  @media screen and (min-width:577px) and (max-width:768px) {
+    #form #input{
+      width: 70%;
+      margin-top: 30%;
+    }
+    #form button{
+      margin-top: 5%;
+      width: 30%;
+      height: 30%;
+    }
+    #cities{
+      font-size: 35px;
+      margin-top: 10%;
+    }
+  }
+  @media screen and (min-width:769px) and (max-width:992px) {
+    #form #input{
+      width: 70%;
+      margin-top: 30%;
+    }
+    #form button{
+      margin-top: 5%;
+      width: 30%;
+      height: 30%;
+    }
+    #cities{
+      font-size: 35px;
+      margin-top: 10%;
+    }
+  }
+  @media screen and (min-width: 993px) and (max-width:1200px) {
+    #form #input{
+      width: 70%;
+      margin-top: 20%;
+    }
+    #form button{
+      margin-top: 5%;
+      width: 30%;
+      height: 30%;
+    }
+    #cities{
+      font-size: 35px;
+      margin-top: 8%;
+    }
+  }
+ </style>
+</head>
+<body>
+  <center>
+    <br>
+    <h1>Weather App</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <form action="" id="form">
+            <input type="text" placeholder="Enter City" id="input"/><br>
+            <button class="btn btn-primary">Submit Place</button>
+          </form>
+          <div id="cities"></div>
+        </div>
+      </div>
+    </div>
+  
+  </center>
+
+  <script>
+
+    const form=document.getElementById("form");
+    const input=document.getElementById("input");
+    const info=document.getElementById("cities");
+    const apiKey="a39eda051b4929eb799a67b224805f7c";
+    form.addEventListener("click",e=>{
+      e.preventDefault();    //in order to paas submission
+      info.textContent="";
+      const inputValue=input.value;
+      const url=`https://api.openweathermap.org/data/2.5/weather?q=${inputValue}&appid=${apiKey}&units=metric`;
+      fetch(url).then(response=>response.json())
+      .then(data=>{
+          const {main,name}=data;  //object wrapping condition..
+          const para=document.createElement("div");
+          para.innerHTML=`<p>City:${name}</p>
+          <div>Temperature : ${Math.round(main.temp)}<sup>0</sup>C</div>`;
+          info.appendChild(para)
+      })
+      // .catch(()=>{
+      //   alert("please enter the valid city");nb
+      // })
+      // form.reset();
+    })
+  </script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+      </script>
+</body>
+</html>
